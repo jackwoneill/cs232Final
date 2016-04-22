@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+<% if user_signed_in? %>
+<h1>Favorite Trails</h1>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Length</th>
+        <th>Status</th>
+        <th>Rideable?</th>
+        <th>Last Updated</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @fav_trails.each do |trail| %>
+        <tr class = "trail-row">
+          <% fav = Favorite.where(user_id: current_user.id).where(trail_id: trail.id).take %>
+          <td><%= button_to "Remove Fav", rem_fav_path(id: fav.id)%> </td>
+
+          <td><%= trail.name.titleize %></td>
+          <td><%= trail.location.titleize %></td>
+          <td><%= "#{trail.length} mi" %></td>
+          <td><%= trail.status.titleize %></td>
+          <td><%= trail_boolean(trail.can_ride) %></td>
+          <td><%= "#{trail.updated_at.strftime("%m/%d/%Y %I:%M %P")}" %></td>
+          <td><%= link_to 'Update', user_edit_trail_path(trail) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+<% end %>
+
+<h1>Listing Trails</h1>
+
+<table>
+  <thead>
+    <tr>
+    <% if user_signed_in? %>
+      <th></th>
+    <% end %>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Length</th>
+      <th>Status</th>
+      <th>Rideable?</th>
+      <th>Last Updated</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Type to Search"></input>
+    </div>
+    <% @trails.each do |trail| %>
+      <tr class = "trail-row">
+        <% if user_signed_in? %>
+          <% new_fav = Favorite.where(user_id: current_user.id).where(trail_id: trail.id).take %>
+          <% if new_fav == nil %>
+            <td>
+              <%= button_to "Add Fav", add_fav_path(user_id: current_user.id, trail_id: trail.id, :method => :post)%> 
+            </td>
+          <% else %>
+            <td><%= button_to "Remove Fav", rem_fav_path(id: new_fav.id)%> </td>
+          <% end %>  
+        <% end %>
+
+
+        <td><%= trail.name.titleize %></td>
+        <td><%= trail.location.titleize %></td>
+        <td><%= "#{trail.length} mi" %></td>
+        <td><%= trail.status.titleize %></td>
+        <td><%= trail_boolean(trail.can_ride) %></td>
+        <td><%= "#{trail.updated_at.strftime("%m/%d/%Y %I:%M %P")}" %></td>
+        <td><%= link_to 'Update', user_edit_trail_path(trail) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Add Trail', new_trail_path %>
