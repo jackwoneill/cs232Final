@@ -1,5 +1,6 @@
 class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:new, :create, :edit, :user_edit, :update, :destroy]
 
   # GET /trails
   # GET /trails.json
@@ -11,6 +12,10 @@ class TrailsController < ApplicationController
 
       @favorites.each do |f|
         @fav_trails.append Trail.find(f.trail_id)
+      end
+
+      @favorites.each do |f|
+        @trails = @trails.reject{|t| t.id == f.trail_id}
       end
 
     end
@@ -51,6 +56,7 @@ class TrailsController < ApplicationController
   # POST /trails.json
   def create
     @trail = Trail.new(trail_params)
+    @trail.changed_by = current_user.email
 
     respond_to do |format|
       if @trail.save
@@ -66,6 +72,7 @@ class TrailsController < ApplicationController
   # PATCH/PUT /trails/1
   # PATCH/PUT /trails/1.json
   def update
+    @trail.changed_by = current_user.email
     respond_to do |format|
       if @trail.update(trail_params)
         format.html { redirect_to trails_path}

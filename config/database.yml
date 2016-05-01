@@ -21,8 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-  database: d2jih9naa21t2i
-  adapter: postgresql
-  user: frovavfpwgdryu
-  password: jp-bbJPWOeyKNVh8oC4WqBkJ0T
-
+  <<: *default
+  database: db/production.sqlite3
