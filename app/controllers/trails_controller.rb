@@ -5,7 +5,8 @@ class TrailsController < ApplicationController
   # GET /trails
   # GET /trails.json
   def index
-    @trails = Trail.all
+    @trails = Trail.all.sort_by{ |t| t.name.downcase}
+
     if user_signed_in?
       @favorites = Favorite.where(user_id: current_user.id).all
       @fav_trails = Array.new
