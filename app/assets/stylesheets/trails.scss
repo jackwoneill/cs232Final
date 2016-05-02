@@ -127,6 +127,48 @@ tr:nth-child(even) {
   .logged-in-trails > tbody > tr > td:nth-of-type(7):before { content: "Last Updated"; }
   .logged-in-trails > tbody > tr > td:nth-of-type(8):before { content: "Update"; }
 
+
+/* NOT LOGGED IN TRAILS */
+/* LOGGED IN NOT FAVORITED TRAILS */
+  .logged-out-trails, .logged-out-trails > thead, .logged-out-trails > tbody, .logged-out-trails > th, .logged-out-trails > tbody > tr > td, .logged-out-trails > tbody > tr { 
+    display: block; 
+    page-break-inside: avoid;
+  }
+  
+  /* Hide table headers */
+  .logged-out-trails > thead, logged-out-trails > tr { 
+    position: relative;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .logged-out-trails > tbody > tr { border: 1px solid #ccc; 
+    min-height: 588px; height: 100%}
+  
+  .logged-out-trails > tbody > tr > td { 
+    /* Set Table Data To Act Like A Row Instead of Column */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+  }
+  
+  .logged-out-trails > tbody > tr > td:before { 
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+  }
+  .logged-out-trails > tbody > tr > td:nth-of-type(1):before { content: "Trail Name"; }
+  .logged-out-trails > tbody > tr > td:nth-of-type(2):before { content: "Location"; }
+  .logged-out-trails > tbody > tr > td:nth-of-type(3):before { content: "Trail Length"; }
+  .logged-out-trails > tbody > tr > td:nth-of-type(4):before { content: "Current Conditions"; }
+  .logged-out-trails > tbody > tr > td:nth-of-type(5):before { content: "Can I Ride?"; }
+  .logged-out-trails > tbody > tr > td:nth-of-type(6):before { content: "Last Updated"; }
+
+
   .main-content {
     height: 110%;
     overflow: auto;
