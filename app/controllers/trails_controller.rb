@@ -20,7 +20,6 @@ class TrailsController < ApplicationController
       end
     @trails = @trails.sort_by{ |t| t.name.downcase }
 
-
     end
   end
 
